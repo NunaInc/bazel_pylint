@@ -51,9 +51,11 @@ black_check_test = rule(
     },
 )
 
-def _add_py_check(name, srcs, lint_rules):
+def _add_py_check(name, srcs, lint_rules, skip_srcs):
     if lint_rules == None:
         lint_rules = "@bazel_pylint//:pylintrc"
+    if skip_srcs != None:
+        srcs = [src for src in srcs if src not in skip_srcs]
     native.genrule(
         name = name + "_pylint",
         srcs = srcs,
@@ -101,8 +103,9 @@ def py_lint_library(**attrs):
     """
     _check_black(attrs)
     lint_rules = _get_lint_rules(attrs)
+    skip_srcs = attrs.pop("skip_srcs", None)
     py_library(**attrs)
-    _add_py_check(attrs["name"], attrs["srcs"], lint_rules)
+    _add_py_check(attrs["name"], attrs["srcs"], lint_rules, skip_srcs)
 
 def py_lint_binary(**attrs):
     """A py_binary rule, that has the sources pylint checked.
@@ -114,8 +117,9 @@ def py_lint_binary(**attrs):
     """
     _check_black(attrs)
     lint_rules = _get_lint_rules(attrs)
+    skip_srcs = attrs.pop("skip_srcs", None)
     py_binary(**attrs)
-    _add_py_check(attrs["name"], attrs["srcs"], lint_rules)
+    _add_py_check(attrs["name"], attrs["srcs"], lint_rules, skip_srcs)
 
 def py_lint_test(**attrs):
     """A py_test rule, that has the sources pylint checked.
@@ -127,5 +131,6 @@ def py_lint_test(**attrs):
     """
     _check_black(attrs)
     lint_rules = _get_lint_rules(attrs)
+    skip_srcs = attrs.pop("skip_srcs", None)
     py_test(**attrs)
-    _add_py_check(attrs["name"], attrs["srcs"], lint_rules)
+    _add_py_check(attrs["name"], attrs["srcs"], lint_rules, skip_srcs)

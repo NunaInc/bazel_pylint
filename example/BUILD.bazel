@@ -23,7 +23,13 @@ load(
 
 py_lint_library(
     name = "py_library",
-    srcs = ["py_library.py"],
+    srcs = [
+        "py_library.py",
+        "py_library2.py",
+    ],
+    skip_srcs = [
+        "py_library2.py",
+    ],
     srcs_version = "PY3",
 )
 

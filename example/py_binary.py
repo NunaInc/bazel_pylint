@@ -16,7 +16,10 @@
 """Example py_lint_binary source."""
 
 import py_library
+import py_library2
 
 if __name__ == '__main__':
   foo = py_library.Foo(10)
   print('add: {}'.format(foo.add(5)))
+  foo2 = py_library2.Foo(20)
+  print('add2: {}'.format(foo2.add(10)))
