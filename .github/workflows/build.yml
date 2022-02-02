@@ -9,6 +9,13 @@ jobs:
         uses: actions/setup-python@v2
         with:
           python-version: '3.7'
+      - name: Install Pip
+        run: python3 -m pip install --upgrade pip
       - uses: bazelbuild/setup-bazelisk@v1
+      - name: Mount bazel cache  # Optional
+        uses: actions/cache@v2
+        with:
+          path: "~/.cache/bazel"
+          key: bazel
       - run: bazel build //...
       - run: bazel test --test_summary=detailed --test_output=errors //...
