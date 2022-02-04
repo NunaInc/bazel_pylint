@@ -34,4 +34,7 @@ Please have pylint version 2.9.x or 2.10.x installed.
 Use `pip3 install -U pylint` to upgrade.""".format(pylint.version))
     args = list(sys.argv)
     args[0] = "pylint"
-    subprocess.run(args, check=True)
+    try:
+        subprocess.run(args, check=True)
+    except subprocess.CalledProcessError:
+        sys.exit(1)
