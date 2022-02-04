@@ -16,13 +16,22 @@
 #
 
 import re
+import subprocess
 import sys
-import pylint
+
 if __name__ == '__main__':
-    version = [int(v) for v in pylint.version.split('.')]
+    # Note: pylint has GPL 2.0 license - but we invoked it as an external program,
+    #       not as an included library, and this artefact does not include any
+    #       portion of the pylint library, and is no derivation of the pylint work.
+    result = subprocess.run(["pylint", "--version"],
+                            capture_output=True,
+                            check=True)
+    version_str = result.stdout.decode('utf-8').split('\n')[0].split(' ')[1]
+    version = [int(v) for v in version_str.split('.')]
     if version[0] != 2 or version[1] < 9 or version[1] > 10:
         sys.exit("""pylint version {} detected
 Please have pylint version 2.9.x or 2.10.x installed.
 Use `pip3 install -U pylint` to upgrade.""".format(pylint.version))
-    sys.argv[0] = re.sub(r'(-script\.pyw|\.exe)?$', '', sys.argv[0])
-    sys.exit(pylint.run_pylint())
+    args = list(sys.argv)
+    args[0] = "pylint"
+    subprocess.run(args, check=True)
