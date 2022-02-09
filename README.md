@@ -6,6 +6,8 @@ Offers `py_lint_library`, `py_lint_binary`, `py_lint_test`, which have
 the Python sources linted during build process, and correspond in turn
 to  `py_libray`, `py_binary` and `py_test`.
 This package uses the `rules_python` set of rules, as a subdependency.
+You need to have `pip3 install pylint==2.10.2` as a binary on your
+machine.
 
 
 ## Setup
@@ -19,8 +21,9 @@ load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 
 http_archive(
   name = "bazel_pylint",
-  url = "<url to release archive>",
+  urls = ["<url to release archive>"],
   sha256 = "<sha256 of the archive file>",
+  strip_prefix = "bazel_pylint-<version>",
 )
 ```
 
