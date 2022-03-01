@@ -16,8 +16,11 @@
 
 load("@rules_python//python:pip.bzl", "pip_install")
 
-def bazel_pylint_setup_workspace():
+def bazel_pylint_setup_workspace(**kwargs):
+    interpreter_target = kwargs.pop("python_interpreter_target", None)
+
     pip_install(
         name = "bazel_pylint_pip_deps",
         requirements = "@bazel_pylint//:requirements.txt",
+        python_interpreter_target = interpreter_target,
     )
