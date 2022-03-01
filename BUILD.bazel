@@ -30,9 +30,6 @@ py_binary(
     deps = [
         requirement("pylint"),
     ],
-    data = [
-        requirement("pylint"),
-    ],
 )
 
 py_binary(
