@@ -28,9 +28,9 @@ if __name__ == '__main__':
                             check=True)
     version_str = result.stdout.decode('utf-8').split('\n')[0].split(' ')[1]
     version = [int(v) for v in version_str.split('.')]
-    if version[0] != 2 or version[1] < 9 or version[1] > 10:
+    if version[0] != 2 or version[1] < 9 or version[1] > 14:
         sys.exit("""pylint version {} detected
-Please have pylint version 2.9.x or 2.10.x installed.
+Please have pylint version 2.9.x or 2.14.x installed.
 Use `pip3 install -U pylint` to upgrade.""".format(version))
     args = [sys.executable, '-m', 'pylint']
     args.extend(sys.argv[1:])

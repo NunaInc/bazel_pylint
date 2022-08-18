@@ -17,9 +17,12 @@
 
 import py_library
 import py_library2
+from typing import NewType
 
 if __name__ == '__main__':
   foo = py_library.Foo(10)
-  print('add: {}'.format(foo.add(5)))
+  print(f'add: {foo.add(5)}')
   foo2 = py_library2.Foo(20)
-  print('add2: {}'.format(foo2.add(10)))
+  print(f'add2: {foo2.add(10)}')
+  annotated_type = NewType(f'Annotated_{py_library.Foo(10)}', int)
+  print(f'Annotated type: {annotated_type}')
